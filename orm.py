@@ -15,7 +15,6 @@ order_lines = Table(
     Column("orderid", String(255)),
 )
 
-
 batches = Table(
     "batches",
     metadata,
@@ -26,7 +25,6 @@ batches = Table(
     Column("eta", Date, nullable=True),
 )
 
-
 allocations = Table(
     "allocations",
     metadata,
@@ -35,3 +33,15 @@ allocations = Table(
     Column("batch_id", ForeignKey("batches.id")),
 )
 
+
+def start_mappers():
+    lines_mapper = mapper(model.OrderLine, order_lines)
+    mapper(
+        model.Batch,
+        batches,
+        properties={
+            "_allocations": relationship(
+                lines_mapper, secondary=allocations, collection_class=set,
+            )
+        },
+    )
