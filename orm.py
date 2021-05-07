@@ -1,14 +1,16 @@
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Table, MetaData, Column, ForeignKey, Integer, String, Date
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, mapper
 
-Base = declarative_base()
+import model
 
-class Order(Base):
-    id = Column(Integer, primary_key=True)
+metadata = MetaData()
 
-class OrderLine(Base):
-    id = Column(Integer, primary_key=True)
-    sku = Column(String(250))
-    qty = Column(String(250))
-    order_id = Column(Integer)
+order_lines = Table(
+    "order_lines",
+    metadata,
+    Column("id", Integer, primary_key=True, autoincrement=True),
+    Column("sku", String(255)),
+    Column("qty", Integer, nullable=False),
+    Column("orderid", String(255)),
+)
