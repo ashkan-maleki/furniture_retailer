@@ -166,4 +166,10 @@ def test_hash_and_equality2():
     # butit's right there!
 
 
-test_hash_and_equality()
+def test_functions_are_objects():
+    def hi():
+        pass
+
+    print(hi)
+
+test_functions_are_objects()
